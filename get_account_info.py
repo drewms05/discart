@@ -24,7 +24,7 @@ def get_account_info(username):
     """
 
     # Retrive user info
-    client = disc.Client('DiscArt', user_token='ZAapAoDKPbaKnwTRGPkogXxTULgzDJXnVCszAwtk')
+    client = disc.Client('DiscArt', user_token='')
     user = client.user(username)
 
     user_data = []
