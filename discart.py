@@ -19,6 +19,9 @@ from filter_data import filter_data
 from sort_data import sort_data
 from download_images import download_images
 from pic_stitch import pic_stitch
+from word_counter import word_counter
+from string_validator import string_validator
+from duplicate_remover import duplicate_remover
 
 
 def move_collage(username):
@@ -115,6 +118,12 @@ def main():
         start = time.perf_counter()
 
         print('\n')
+
+        # Make sure username meets minmum length requirements
+        valid = string_validator(username)
+        if valid is False:
+            print('\nNot a valid Discogs username.')
+            continue
 
         # Retrieve collection data
         try:
@@ -222,7 +231,8 @@ def main():
                       '\n3. Choose different collage options',
                       '\n4. Retrieve new user data',
                       '\n5. Delete current user data',
-                      '\n6. Exit DiscArt')
+                      '\n6. View fun facts'
+                      '\n7. Exit DiscArt')
                 choice = input('\nPlease select one of the choices above: ')
                 match choice:
                     case '1':
@@ -275,6 +285,25 @@ def main():
                             case _: 
                                 print('Not a valid option. Aborting data deletion.')
                     case '6':
+                        longest = 0
+                        title = ''
+                        IDs = []
+                        for item in working_user_data:
+                            length = int(word_counter(item['basic_information']['title']))
+                            if length > longest:
+                                longest = length
+                                title = item['basic_information']['title']
+                            IDs.append(item['basic_information']['id'])
+                        duplicates = duplicate_remover(IDs)
+
+                        if duplicates > 1 or duplicates == 0:
+                            print(f'\nYou have {duplicates} duplicates in your collection')
+                        else:
+                            print('\nYou have one duplicate in your collection')
+                        print(f'\nThe longest title in your collection is \'{title}\'')
+
+                        
+                    case '7':
                         sys.exit()
                     case _:
                         print('\nNot a valid option. Please try again.')
