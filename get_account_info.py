@@ -24,7 +24,7 @@ def get_account_info(username):
     """
 
     # Retrive user info
-    client = disc.Client('DiscArt', user_token='')
+    client = disc.Client('DiscArt', user_token='ZAapAoDKPbaKnwTRGPkogXxTULgzDJXnVCszAwtk')
     user = client.user(username)
 
     user_data = []
@@ -34,7 +34,6 @@ def get_account_info(username):
     albums = user.collection_folders[0].releases.count
     max_pages = (albums//100)+1
     collection.per_page = 100
-    
     collection_page = 1
     album_count = 1
 
