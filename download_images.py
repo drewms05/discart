@@ -12,7 +12,6 @@ from rich.progress import Progress
 from PIL import Image
 import requests as req
 from io import BytesIO
-from check_url import check_url
 
 
 def download_images(username, user_data, albums):
@@ -77,10 +76,6 @@ def download_images(username, user_data, albums):
             # Image is not already downloaded
             else:
                 url = (item['basic_information']['cover_image'])
-                valid = check_url(url)
-                if not valid:
-                    print(f'\nImage at {url} skipped. URL is invalid.')
-                    continue
                 response = req.get(url, headers=headers)
                 response.raise_for_status()
                 image = Image.open(BytesIO(response.content))
